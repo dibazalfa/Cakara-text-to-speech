@@ -20,6 +20,7 @@
             <button type="button" @click="SpeechForm.stopbtn()" class="btn btn-default"><i class="glyphicon glyphicon-stop"></i> Stop</button>
             <button type="button" @click="SpeechForm.resetform()" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i> Clear</button>
             <button type="button" @click="SpeechForm.copy()" class="btn btn-default"><i class="glyphicon glyphicon-duplicate"></i> Copy</button>
+            <button type="button" @click="SpeechForm.downloadSound()" class="btn btn-default"><i class="glyphicon glyphicon-download"></i> Download</button>
             <select v-model="voiceindex">
               <option v-for="voice in voiceselect" v-bind:key="voice" :value="voice.value">{{voice.text}}</option>
             </select>
@@ -89,6 +90,11 @@ export default {
           vm.$refs.area.select();
           document.execCommand('copy');
         },
+        // downloadSound() {
+        //   var blob = new Blob([vm.area], {type: "sound/mp3"});
+        //   var url = URL.createObjectURL(blob);
+        //   var a = document.createElement('a');
+        // },
         resetform() {
           vm.SpeechSynth.stop();
           vm.area = ''
