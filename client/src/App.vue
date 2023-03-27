@@ -1,6 +1,7 @@
 <template>
   <header>
     <div class="global-container">
+    <link rel="stylesheet" href="/src/input.css">
     <RouterView />
       <nav>
         <RouterLink to="/"></RouterLink>

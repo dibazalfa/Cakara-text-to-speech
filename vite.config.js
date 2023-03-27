@@ -12,3 +12,9 @@ export default defineConfig({
     }
   }
 })
+
+// module.exports = {
+//   devServer: {
+//     proxy: '/plaintext/:url'
+//   }
+// }

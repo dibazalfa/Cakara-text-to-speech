@@ -6,7 +6,16 @@ import DOMPurify from 'dompurify'
 const app = express();
 const port = 3000;
 
-app.use(cors());
+app.use(cors({
+  // origin: '/plaintext/:url',
+  // methods: ["GET", "POST"]
+}));
+
+// app.use (function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5173") //mengatur domain yang diizinkan
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+//   next();
+// });
 
 app.use("/", router);
 
@@ -14,35 +23,14 @@ app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
-//home
-// app.get('/plaintext/:url', async (req, res) => {
-//   const url = req.params.url;
-//   try {
-//     const response = await axios.get(url);
-//     const sanitizedHTML = DOMPurify.sanitize(response.data, { KEEP_FORMATTING: true });
-//     const tagRegex = /<\/?[a-z][^>]*>/gi;
-//     const tags = sanitizedHTML.match(tagRegex);
-//     let plaintext = sanitizedHTML;
-
-//     tags.forEach(tag => {
-//       plaintext = plaintext.replace(tag, `\n${tag}\n`)
-//     })
-
-//     res.send(sanitizedHTML);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send('Terjadi kesalahan saat mengambil data dari URL tersebut');
-//   }
-// });
-
-
-//about
 app.get('/plaintext/:url', async (req, res) => {
   const url = req.params.url;
   try {
     const response = await axios.get(url);
     const sanitizedHTML = DOMPurify.sanitize(response.data);
     res.send(sanitizedHTML);
+    // res.set('Access-Control-Allow-Origin', '*');
+    res.send(response.data)
   } catch (error) {
     console.error(error);
     res.status(500).send('Terjadi kesalahan saat mengambil data dari URL tersebut');

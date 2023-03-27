@@ -1,172 +1,95 @@
 <template>
-  <div>
-    <div class="container text-center mb-3 pb-3">
-      <h1>Tekmul woy</h1>
-    </div>
-    <div class="container text-center mt-2 pt-2">
-      <div class="col">
-        <div class="card">
-          <div class="card-header">Text-to-speech</div>
-          <div class="card-body grid gap-0 column-gap-2 p-2 m-2 g-col-6">
-            <div class="input-group input-group-sm mb-3">
-              <button @click="convertLink()" class="input-group-text btn btn-primary">Convert to Text</button>
-              <input type="text" class="form-control" v-model="url" placeholder="Masukkan URL Website">
-            </div>
-            <textarea 
-              placeholder="Masukkan Text"
-              class="form-control" 
-              style="height: 500px;" 
-              v-model="textDefault">
-            </textarea>
-            <br>
-            <div class="d-flex gap-2 lang-select">
-              <button @click="speechCreate()" class="btn btn-primary">
-                Speak
-              </button>
-              <select class="form-select" 
-                aria-label="Default select example"
-                v-model="langOption"
-                >
-                <option selected disabled>Select a languange</option>
-                <option value="ID">Bahasa Indonesia</option>
-                <option value="EN">Bahasa Inggris</option>
-                <option value="JV">Bahasa Jawa</option>
-                <option value="FR">Bahasa Perancis</option>
-              </select>
-              <div class="doc-select">
-                <input 
-                  type="file"
-                  class="form-control"
-                  id="formFile"
-                  ref="doc"
-                  @change="readFile()">
-              </div>
-              <div class="d-flex flex-row">
-                <button @click="clearText()" class="btn btn-primary">
-                  Clear
-                </button>
-                <div>
-                  <button v-if="pause" @click="pauseSpeech()" class="btn btn-primary">
-                    Pause
-                  </button>
-                  <button v-else @click="resumeSpeech()" class="btn btn-primary">
-                    Resume
-                  </button>
-                </div>
-                <button @click="stopSpeech()" class="btn btn-primary">
-                  Stop
-                </button>
-              </div>
-            </div>
-          </div>
+  <div class="background-image">
+    <div class="h-full">
+      <h1 class="text-4xl font-bold flex items-center justify-center py-20">CAKARA</h1>
+        <div class="container w-full mx-auto rounded-3xl border-4 py-4 sm:px-6 lg:px-9">
+          <div class="flex mx-auto py-8 sm:px-6 lg:px-8">
+          <input v-model="url" class="hover:shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 w-full px-3 rounded-xl text-black placeholder-black" type="text" placeholder="Drop your link here">
+          <button type="submit" @click="convertLink" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none">Convert</button>
         </div>
-      </div>
-    
-    <!-- Translate dari TTS -->
-    <br><br>
-      <div class="col">
-        <div class="card w-100">
-          <div class="card-body">
-            <h5 class="card-title">Terjemahkan ke bahasa lain</h5>
-            <div class="form-floating pb-3">
-              <textarea 
-                class="form-control"
-                style="height: 100px"
-                v-model="afterTranslationDefault"
-              ></textarea>
-            </div>
-            <!-- select languange -->
-            <div class="d-flex flex-row w-60 gap-2">
-              <select
-                class="form-select"
-                v-model="translateToDefault"
-              >
-                <option value="indonesian">Bahasa Indonesia</option>
-                <option value="english">Bahasa Inggris</option>
-                <option value="javanese">Bahasa Jawa</option>
-                <option value="sundanese">Bahasa Sunda</option>
-              </select>
-              <div class="d-flex flex-row justify-content-end">
-                <a class="btn btn-primary" @click="translateTextDefault()">Translate</a>
-              </div>
-              <div class="d-flex flex-row justify-content-end">
-                <a class="btn btn-primary" @click="speakTranslatedTextDefault()">Speak</a>
-              </div>
-            </div>
+        <textarea
+          id="text"
+          type="text" 
+          v-model="textDefault"
+          placeholder="Type your text here"
+          class="hover:shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10  w-full px-3 py-3 h-60 rounded-xl bg-amber-500 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 text-xl focus:outline-none text-black placeholder-black">
+        </textarea>
+        <div class="mt-6 flex justify-evenly">
+          <select v-model="langOption" name="bhs" id="bhs" class="p-2 rounded-lg bg-gray-100 focus:outline-none">
+            <option value="EN">ENGLISH</option> 
+            <option value="ID">INDONESIAN</option>
+          </select>
+          <button type="submit" @click="speechCreate()" class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none"
+          >Speak</button>
+          <button type="submit" @click="clearText()" class="px-6 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 focus:outline-none"
+          >Clear</button>
+          <div>
+            <button v-if="pause" @click="pauseSpeech()" class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none">
+              Pause
+            </button>
+            <button v-else @click="resumeSpeech()" class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none">
+              Resume
+            </button>
           </div>
+          <!-- <button type="submit" @click="" class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none"
+          >Pause</button> -->
+          <button type="submit" @click="stopSpeech()" class="px-6 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 focus:outline-none"
+          >Stop</button>
+          <button type="submit" @change="readFile()" class="px-6 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 focus:outline-none"
+          >Add File</button>
+        </div>
+
+        <!-- Translate From -->
+        <h1 class="text-4xl font-bold flex items-center justify-center pt-10">Translate</h1>
+        <div class="h-fit pt-5 flex space-x-4 items-center justify-start">
+        <div class="container mx-auto rounded-3xl border-4 px-4 py-8 sm:px-6 lg:px-8">
+        <textarea
+          id="text"
+          type="text"
+          v-model="beforeTranslation"
+          placeholder="Type your text here"
+          class="hover:shadow-md bg-gray-300 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 w-full px-3 py-3 h-60 rounded-xl bg-fuchsia-300 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-30 text-xl focus:outline-none text-black placeholder-black"> 
+          </textarea>    
+        <div class="mt-6">
+          <select v-model="translateFrom" name="bhs" id="bhs" class="p-2 rounded-lg bg-gray-100 focus:outline-none">
+            <option value="english">ENGLISH</option>
+            <option value="indonesian">INDONESIAN</option>
+          </select>
         </div>
       </div>
 
-      <!-- Translate -->
-      <br /><br />
-
-    <div class="row">
-      <div class="col">
-        <div class="card w-100">
-          <div class="card-body">
-            <h5 class="card-title">From</h5>
-            <div class="form-floating pb-3">
-                  <textarea
-                    class="form-control"
-                    id="floatingTextarea2"
-                    style="height: 100px"
-                    v-model="beforeTranslation"
-                  ></textarea>
-                </div>
-                <div class="d-flex flex-row gap-2 w-50">
-                  <select
-                      class="form-select"
-                      aria-label="Default select example"
-                      v-model="translateFrom"
-                    >
-                      <option value="indonesian">Bahasa Indonesia</option>
-                      <option value="english">Bahasa Inggris</option>
-                      <option value="javanese">Bahasa Jawa</option>
-                      <option value="sundanese">Bahasa Sunda</option>
-                    </select>
-                  </div>
-          </div>
+      <!-- Translate To -->
+      <div class="container mx-auto rounded-3xl border-4 px-4 py-8 sm:px-6 lg:px-8">
+        <textarea
+          id="text"
+          type="text"
+          v-model="afterTranslation"
+          placeholder="Translation"
+          class="hover:shadow-md bg-gray-300 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 w-full px-3 py-3 h-60 rounded-xl bg-fuchsia-300 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-30 text-xl focus:outline-none text-black placeholder-black"
+          disabled>  
+          </textarea>   
+        <div class="mt-6 flex justify-evenly">
+          <select v-model="translateTo" name="bhs" id="bhs" class="p-2 rounded-lg bg-gray-100 focus:outline-none">
+            <option value="english">ENGLISH</option>
+            <option value="indonesian">INDONESIAN</option>
+          </select>
+          <button type="submit" @click="translateText()" class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none">Translate</button>
+          <button type="submit" @click="speakTranslatedText()" class="px-6 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 focus:outline-none">Speak</button>
+        </div>
         </div>
       </div>
-  
-      <div class="col">
-        <div class="card w-100">
-          <div class="card-body">
-            <h5 class="card-title">To</h5>
-            <div class="form-floating pb-3">
-                  <textarea
-                    class="form-control"
-                    id="floatingTextarea2"
-                    style="height: 100px"
-                    v-model="afterTranslation"
-                  ></textarea>
-                </div>
-                <!-- select language -->
-                <div class="d-flex flex-row w-60 gap-2">
-                  <select
-                      class="form-select"
-                      aria-label="Default select example"
-                      v-model="translateTo"
-                    >
-                      <option value="indonesian">Bahasa Indonesia</option>
-                      <option value="english">Bahasa Inggris</option>
-                      <option value="javanese">Bahasa Jawa</option>
-                      <option value="sundanese">Bahasa Sunda</option>
-                    </select>
-                    <div class="d-flex flex-row justify-content-end">
-                      <a class="btn btn-primary" @click="translateText()">Translate</a>
-                    </div>
-                    <div class="d-flex flex-row justify-content-end">
-                      <a class="btn btn-primary" @click="speakTranslatedText()">Speak</a>
-                    </div>
-                </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
-</div>
-</template>
+  </template>
+
+<style>
+.background-image {
+  background-image: url('@/assets/BackgroundWeb.png');
+  background-size: cover;
+  background-position: center center;
+}
+</style>
 
 <script>
 import axios from 'axios';
@@ -250,8 +173,8 @@ export default {
     } catch(error) {
       Swal.fire({
           icon: 'error',
-          title: 'Pilih Bahasa',
-          text: 'kelihatannya kamu belum menentukan bahasamu'
+          title: 'Bahasa belum dipilih',
+          text: 'Pilih bahasa terlebih dahulu'
         })
         console.error(error);
     }
@@ -290,6 +213,7 @@ export default {
     },
     clearText() {
       this.textDefault = "";
+      this.afterTranslationDefault = "";
     },
     async translateTextDefault() {
       const fromLang = this.langOption;
@@ -326,7 +250,7 @@ export default {
         this.voiceName =
           "Microsoft Tuti Online (Natural) - Sundanese (Indonesia)";
       }
-  
+
       await speech.init({
           volume: 0.5,
           lang: this.lang,
