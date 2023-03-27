@@ -10,14 +10,14 @@
         <div class="flex mx-auto py-8 sm:px-6 lg:px-8">
           <input
             v-model="url"
-            class="hover:shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 w-full px-3 rounded-xl text-black placeholder-black"
+            class="hover:shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 w-full px-3 -ml-8 mr-2 rounded-xl text-black placeholder-black"
             type="text"
             placeholder="Drop your link here"
           />
           <button
             type="submit"
             @click="convertLink"
-            class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none"
+            class="px-6 py-3 -mr-8 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none"
           >
             Convert
           </button>
@@ -31,14 +31,13 @@
         >
         </textarea>
         <div class="mt-6 flex justify-evenly">
-          <select v-model="selectedLanguage" id="voice-select">
+          <select v-model="selectedLanguage" id="voice-select" class="w-96">
             <option value="" selected>Pilih Bahasa</option>
             <option
               v-for="(voice, index) in voices"
               :key="index"
               :value="voice.lang"
               :data-name="voice.name"
-              v-bind:value="voice.value"
             >
               {{ voice.name }} ({{ voice.lang }})
             </option>
@@ -47,28 +46,28 @@
           <button
             type="submit"
             @click="speechCreate()"
-            class="px-6 py-2 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 focus:outline-none"
+            class="px-6 py-2 mr-1 ml-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none"
           >
             Speak
           </button>
           <button
             type="submit"
             @click="clearText()"
-            class="px-6 py-2 bg-red-600 text-white rounded-full font-semibold hover:bg-red-700 focus:outline-none"
+            class="px-6 py-2 mx-1 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 focus:outline-none"
           >
             Clear
           </button>
           <button
             v-if="pause"
             @click="pauseSpeech()"
-            class="px-6 py-2 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 focus:outline-none"
+            class="px-6 py-2 mx-1 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none"
           >
             Pause
           </button>
           <button
             v-else
             @click="resumeSpeech()"
-            class="px-6 py-2 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 focus:outline-none"
+            class="px-6 py-2 mx-1 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none"
           >
             Resume
           </button>
@@ -77,7 +76,7 @@
           <button
             type="submit"
             @click="stopSpeech()"
-            class="px-6 py-2 bg-red-600 text-white rounded-full font-semibold hover:bg-red-700 focus:outline-none"
+            class="px-6 py-2 mx-1 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 focus:outline-none"
           >
             Stop
           </button>
@@ -89,7 +88,7 @@
                   @change="readFile()"> -->
           <input
             type="file"
-            class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
+            class="block w-full -mr-5 text-sm text-slate-500 file:mr-2 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
             id="formFile"
             ref="doc"
             @change="readFile()"
@@ -122,7 +121,7 @@
                 <option value="" selected>Pilih Bahasa</option>
                 <option
                   v-for="(lang, key) in supportedLang"
-                  :key="index"
+                  :key="key"
                   :value="lang"
                 >{{ key }}
               </option>
@@ -153,7 +152,7 @@
                 <option value="" selected>Pilih Bahasa</option>
                 <option
                   v-for="(lang, key) in supportedLang"
-                  :key="index"
+                  :key="key"
                   :value="lang"
                 >{{ key }}
               </option>
@@ -164,13 +163,6 @@
                 class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none"
               >
                 Translate
-              </button>
-              <button
-                type="submit"
-                @click="speakTranslatedText()"
-                class="px-6 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 focus:outline-none"
-              >
-                Speak
               </button>
             </div>
           </div>
@@ -525,6 +517,7 @@ export default {
     stopSpeech() {
       let speech = new Speech();
       speech.cancel();
+      // this.pause = true;
     },
     readFile() {
       this.file = this.$refs.doc.files[0];
@@ -548,6 +541,7 @@ export default {
       this.textDefault = "";
       let speech = new Speech();
       speech.cancel();
+      // this.pause = true;
     },
     async translateText() {
       const fromLang = this.translateFrom;
