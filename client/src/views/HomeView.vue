@@ -11,32 +11,44 @@
           id="text"
           type="text" 
           v-model="textDefault"
-          placeholder="Type your text here"
+          placeholder="Insert your text here"
           class="hover:shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10  w-full px-3 py-3 h-60 rounded-xl bg-amber-500 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 text-xl focus:outline-none text-black placeholder-black">
         </textarea>
         <div class="mt-6 flex justify-evenly">
-          <select v-model="langOption" name="bhs" id="bhs" class="p-2 rounded-lg bg-gray-100 focus:outline-none">
+          <select v-model="langOption" name="bhs" id="bhs" class="p-2 rounded-lg bg-gray-100 placeholder-black focus:outline-none">
+            <option value="" selected>Pilih Bahasa</option> 
             <option value="EN">ENGLISH</option> 
             <option value="ID">INDONESIAN</option>
           </select>
-          <button type="submit" @click="speechCreate()" class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none"
+          <button type="submit" @click="speechCreate()" class="px-6 py-2 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 focus:outline-none"
           >Speak</button>
-          <button type="submit" @click="clearText()" class="px-6 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 focus:outline-none"
+          <button type="submit" @click="clearText()" class="px-6 py-2 bg-red-600 text-white rounded-full font-semibold hover:bg-red-700 focus:outline-none"
           >Clear</button>
-          <div>
-            <button v-if="pause" @click="pauseSpeech()" class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none">
+            <button v-if="pause" @click="pauseSpeech()" class="px-6 py-2 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 focus:outline-none">
               Pause
             </button>
-            <button v-else @click="resumeSpeech()" class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none">
+            <button v-else @click="resumeSpeech()" class="px-6 py-2 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 focus:outline-none">
               Resume
             </button>
-          </div>
           <!-- <button type="submit" @click="" class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none"
           >Pause</button> -->
-          <button type="submit" @click="stopSpeech()" class="px-6 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 focus:outline-none"
+          <button type="submit" @click="stopSpeech()" class="px-6 py-2 bg-red-600 text-white rounded-full font-semibold hover:bg-red-700 focus:outline-none"
           >Stop</button>
-          <button type="submit" @change="readFile()" class="px-6 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 focus:outline-none"
-          >Add File</button>
+          <!-- <input 
+                  type="file"
+                  class="form-control"
+                  id="formFile"
+                  ref="doc"
+                  @change="readFile()"> -->
+          <input type="file" class="block w-full text-sm text-slate-500
+            file:mr-4 file:py-2 file:px-4
+            file:rounded-full file:border-0
+            file:text-sm file:font-semibold
+            file:bg-violet-50 file:text-violet-700
+            hover:file:bg-violet-100"
+            id="formFile"
+            ref="doc"
+            @change="readFile()"/>
         </div>
 
         <!-- Translate From -->
@@ -51,7 +63,8 @@
           class="hover:shadow-md bg-gray-300 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 w-full px-3 py-3 h-60 rounded-xl bg-fuchsia-300 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-30 text-xl focus:outline-none text-black placeholder-black"> 
           </textarea>    
         <div class="mt-6">
-          <select v-model="translateFrom" name="bhs" id="bhs" class="p-2 rounded-lg bg-gray-100 focus:outline-none">
+          <select v-model="translateFrom" name="bhs" id="bhs" class="p-2 rounded-full bg-gray-100 focus:outline-none">
+            <option value="" selected>Pilih Bahasa</option>
             <option value="english">ENGLISH</option>
             <option value="indonesian">INDONESIAN</option>
           </select>
@@ -70,6 +83,7 @@
           </textarea>   
         <div class="mt-6 flex justify-evenly">
           <select v-model="translateTo" name="bhs" id="bhs" class="p-2 rounded-lg bg-gray-100 focus:outline-none">
+            <option value="" selected>Pilih Bahasa</option>
             <option value="english">ENGLISH</option>
             <option value="indonesian">INDONESIAN</option>
           </select>
@@ -105,7 +119,7 @@ export default {
       textDefault: '',
       text: "",
       file: null,
-      langOption: null,
+      langOption: "",
       lang: null,
       voiceName: null,
       beforeTranslation: '',
@@ -213,61 +227,8 @@ export default {
     },
     clearText() {
       this.textDefault = "";
-      this.afterTranslationDefault = "";
-    },
-    async translateTextDefault() {
-      const fromLang = this.langOption;
-      const toLang = this.translateToDefault;
-      // console.log(fromLang, toLang);
-      let text = await translate(this.textDefault, {
-        from: fromLang,
-        to: toLang,
-      });
-      // console.log(text);
-      this.afterTranslationDefault = text;
-    },
-    async speakTranslatedTextDefault(){
-      const speech = new Speech()
-      
-      if (this.translateToDefault == "indonesian") {
-        this.lang = "id-ID";
-        this.voiceName =
-          "Microsoft Ardi Online (Natural) - Indonesian (Indonesia) " ||
-          "Google Bahasa Indonesia";
-      } else if (this.translateToDefault == "english") {
-        this.lang = "en-GB";
-        this.voiceName =
-          "Google UK English Female" ||
-          "Microsoft Maisie Online (Natural) - English (United Kingdom)";
-      } else if (this.translateToDefault == "javanese") {
-        speech.setLanguage("jv-ID");
-        this.lang = "jv-ID";
-        this.voiceName =
-          "Microsoft Siti Online (Natural) - Javanese (Indonesia)";
-      } else if (this.translateToDefault == "sundanese") {
-        speech.setLanguage("su-ID");
-        this.lang = "su-ID";
-        this.voiceName =
-          "Microsoft Tuti Online (Natural) - Sundanese (Indonesia)";
-      }
-
-      await speech.init({
-          volume: 0.5,
-          lang: this.lang,
-          rate: 1,
-          pitch: 1,
-          name: this.voiceName,
-          voiceURI: this.voiceName,
-          splitSentences: true,
-          listeners: {
-            onvoiceschanged: (voices) => {
-              console.log("Event voiceschanged", voices);
-            },
-          },
-        });
-        speech.speak({
-          text: this.afterTranslationDefault,
-        });
+      let speech = new Speech()
+      speech.cancel()
     },
     async translateText() {
       const fromLang = this.translateFrom;
