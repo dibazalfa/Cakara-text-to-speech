@@ -37,7 +37,7 @@
         </div>
       </div>
       <div class="col-lg-12">
-        <p class="about-description">Membaca seringkali merupakan perjuangan berat bagi orang-orang dengan gangguan seperti disleksia, ADHD, dan ketidakmampuan visual atau belajar. Tidak sedikit pelajar yang sering merasa tertinggal karena perbedaan tersebut yang menyebabkan kurangnya kepercayaan diri. Belum lagi orang dewasa yang telah mengatasi kekurangannya tetapi masih merasa kesulitan membaca dan berimbas pada produktifitas kerja.</p>
+        <p class="about-description">Membaca seringkali merupakan perjuangan berat bagi orang-orang dengan gangguan seperti disleksia, ADHD, dan ketidakmampuan visual atau belajar. Tidak sedikit pelajar yang sering merasa tertinggal karena perbedaan tersebut yang menyebabkan kurangnya kepercayaan diri. Belum lagi orang dewasa yang telah mengatasi kekurangannya tetapi masih merasa kesulitan membaca dan berimbas pada produktivitas kerja.</p>
         <p class="about-description">Untungnya, kemajuan teknologi telah berevolusi. Dengan adanya teknologi text to speech (TTS), kita dapat mengasah kemampuan membaca dan meningkatkan produktivitas dalam segala bidang. Hal tersebut dapat terpenuhi dengan beberapa fitur pada aplikasi Cakara ini, yaitu text to speech, terjemahan berbagai bahasa, input file text document dari penyimpanan, input langsung melalui link website, serta fitur stop, pause, resume dan clear audio.</p>
         <p class="about-description">Tujuan dan Manfaat dari aplikasi ini tidak tertuju pada suatu kalangan tertentu. Aplikasi ini dapat bermanfaat untuk kumpulan orang yang memiliki gangguan untuk membaca seperti pengidap disleksia maupun para anak kecil yang baru belajar membaca. Selain itu, aplikasi ini dapat meningkatkan produktivitas banyak golongan orang dengan dapat “membaca” apapun yang ingin kita baca sesuai dengan kebutuhan masing masing serta dapat disesuaikan dengan bahasa yang diinginkan. Seperti contoh berita terkini, resep masakan, maupun dokumen kerja yang belum sempat kita review.</p>
       </div>
@@ -110,8 +110,9 @@
       </div> 
       <div class="col-lg-12">
         <br>
-        <p class="about-description">Website ini dibuat sebgai tugas 3 Konsep Dasar Multimedia dari Mata Kuliah Teknologi Multimedia</p>
+        <p class="about-description">Website ini dibuat sebagai Tugas 3 Konsep Dasar Multimedia dari Mata Kuliah Teknologi Multimedia</p>
         <p class="about-description">Dosen Pengampu  Ibu Henning Titi Ciptaningtyas S.Kom, M.Kom</p>
+        <p class="about-description">Institut Teknologi Sepuluh Nopember</p>
         </div>
     </div>
   </div>

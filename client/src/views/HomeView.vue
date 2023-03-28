@@ -142,7 +142,7 @@
               disabled
             >
             </textarea>
-            <div class="mt-6 flex justify-evenly">
+            <div class="mt-6">
               <select
                 v-model="translateTo"
                 name="bhs"
@@ -161,6 +161,7 @@
                 type="submit"
                 @click="translateText()"
                 class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 focus:outline-none"
+                style="margin-left:350px"
               >
                 Translate
               </button>
@@ -207,6 +208,8 @@ export default {
       voices: [],
       voice: "",
       supportedLang: {
+        indonesian: "id",
+        english: "en",
         afar: "aa",
         abkhazian: "ab",
         afrikaans: "af",
@@ -258,7 +261,6 @@ export default {
         flemish: "nl",
         dzongkha: "dz",
         greek: "el",
-        english: "en",
         esperanto: "eo",
         estonian: "et",
         ewe: "ee",
@@ -295,7 +297,6 @@ export default {
         interlingue: "ie",
         occidental: "ie",
         interlingua: "ia",
-        indonesian: "id",
         inupiaq: "ik",
         italian: "it",
         javanese: "jv",
