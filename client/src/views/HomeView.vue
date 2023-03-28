@@ -1,8 +1,8 @@
 <template>
   <div class="background-image">
     <div class="h-full">
-      <h1 class="text-4xl font-bold flex items-center justify-center py-20">
-        CAKARA
+      <h1 class="text-4xl font-serif font-bold text-indigo-900 flex items-center justify-center py-20">
+        CAKARA Text-to-Speech
       </h1>
       <div
         class="container w-full mx-auto rounded-3xl border-4 py-4 sm:px-6 lg:px-9"

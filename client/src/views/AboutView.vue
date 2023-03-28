@@ -153,7 +153,7 @@ export default {
     background-position: center center;
     font-family: 'Poppins';
     font-weight: 400;
-    font-size: 25px;
+    font-size: 18px;
     color: #3D366B;
     
   }
